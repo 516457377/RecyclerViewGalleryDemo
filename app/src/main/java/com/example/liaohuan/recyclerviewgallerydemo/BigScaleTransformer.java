@@ -4,8 +4,11 @@ import android.view.View;
 
 public class BigScaleTransformer
         implements GalleryLayoutManager.ItemTransformer {
-    public static final int ROTATE_ANGEL = 7;
-
+    public static final int ROTATE_ANGEL = 7;//don't chicken.
+    /*
+    *paramFloat will be -3 to 3 change,max and min valeus on the GalleryLayoutManager super.transformItem can set.
+    * paramInt is now item number.
+    * */
     public void transformItem(GalleryLayoutManager paramGalleryLayoutManager, View paramView, float paramFloat, int paramInt) {
         paramView.setPivotX(paramView.getWidth() / 2.0F);
         paramView.setPivotY(paramView.getHeight() / 2.0F);

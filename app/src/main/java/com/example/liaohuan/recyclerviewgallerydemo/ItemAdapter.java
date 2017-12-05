@@ -32,14 +32,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
     @Override
     public Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (clickListener != null)
-                    clickListener.onItemClick(view);
-            }
-        });
-        Viewholder holder = new Viewholder(view);
+        Viewholder holder = new Viewholder(view,clickListener);
         return holder;
     }
 
@@ -56,22 +49,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Viewholder> {
         return Integer.MAX_VALUE;
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder {
+    public class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected ImageView img;
 
-        public Viewholder(View itemView, ImageView img) {
+        protected  RecyclerOnClickListener clickListener;
+
+        public Viewholder(View itemView, RecyclerOnClickListener clickListener) {
             super(itemView);
-            this.img = img;
+            img = itemView.findViewById(R.id.img_bg);
+            this.clickListener = clickListener;
+            itemView.setOnClickListener(this);
         }
 
         public Viewholder(View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img_bg);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null)
+                clickListener.onItemClick(getLayoutPosition());
         }
     }
 
     public interface RecyclerOnClickListener {
-        void onItemClick(View view);
+        void onItemClick(int pos);
     }
 }
 
